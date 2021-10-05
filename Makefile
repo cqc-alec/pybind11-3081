@@ -18,3 +18,5 @@ all:
 clean:
 	rm -f *.o *.d *.so *.dylib
 
+test: all
+	python -c "from A import A"
