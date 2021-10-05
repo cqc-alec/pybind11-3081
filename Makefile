@@ -11,7 +11,7 @@ PYROOT=/Users/alec/.pyenv/versions/3.8.11
 all:
 	$(CXX) -I. -stdlib=libc++ -O3 -DNDEBUG -arch arm64 -isysroot $(SDK) -fPIC -std=c++2a -o A.cpp.o -c A.cpp
 	$(CXX) -stdlib=libc++ -O3 -DNDEBUG -arch arm64 -isysroot $(SDK) -dynamiclib -Wl,-headerpad_max_install_names -o libA.dylib -install_name @loader_path/libA.dylib A.cpp.o
-	$(CXX) -I. -isystem $(PYBIND_INC) -isystem $(PYROOT)/include/python3.8 -O3 -DNDEBUG  -arch arm64 -isysroot $(SDK113) -fPIC -fvisibility=hidden -Os -Wno-register -Wno-deprecated-register -std=c++2a -MD -MT binder.cpp.o -MF binder.cpp.o.d -o binder.cpp.o -c binder.cpp
+	$(CXX) -I. -isystem $(PYBIND_INC) -isystem $(PYROOT)/include/python3.8 -O3 -DNDEBUG  -arch arm64 -isysroot $(SDK113) -fPIC -fvisibility=hidden -Os -std=c++2a -MD -MT binder.cpp.o -MF binder.cpp.o.d -o binder.cpp.o -c binder.cpp
 	$(CXX) -O3 -DNDEBUG -arch arm64 -isysroot $(SDK113) -bundle -Wl,-headerpad_max_install_names -Xlinker -undefined -Xlinker dynamic_lookup -o A.cpython-38-darwin.so binder.cpp.o -L. -lA  $(PYROOT)/lib/libpython3.8.a
 	$(STRIP) -x A.cpython-38-darwin.so
 
