@@ -24,6 +24,8 @@ oldway:
 	$(CXX) -stdlib=libc++ -arch arm64 -isysroot $(SDK) -dynamiclib -Wl,-headerpad_max_install_names -o libA.dylib -install_name @loader_path/libA.dylib A.cpp.o
 	$(CXX) -I. -isystem $(PYBIND_INC) -isystem $(PYROOT)/include/python3.8 -arch arm64 -isysroot $(SDK) -fPIC -fvisibility=hidden -std=c++2a -MD -MT binder.cpp.o -MF binder.cpp.o.d -o binder.cpp.o -c binder.cpp
 	$(CXX) -arch arm64 -isysroot $(SDK) -bundle -Wl,-headerpad_max_install_names -Xlinker -undefined -Xlinker dynamic_lookup -o A.cpython-38-darwin.so binder.cpp.o -L. -lA
+	$(STRIP) -x A.cpython-38-darwin.so
 
 testoldway: oldway
 	$(PYROOT)/bin/python -c "from A import A"
+
